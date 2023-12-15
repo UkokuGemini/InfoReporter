@@ -151,6 +151,12 @@ Public Class MainForm
     Private Sub TextBox_Log_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Log.TextChanged
         TextBox_Log.SelectionStart = TextBox_Log.Text.Length
     End Sub
+
+    Private Sub 强制发布ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 强制发布ToolStripMenuItem.Click
+        Once = True
+        Timer1_Tick(Nothing, Nothing)
+    End Sub
+
     Function ReadSettingXml() As Boolean
         Dim Res As Boolean = True
         Dim SettingPath As String = Directory.GetCurrentDirectory & "\InfoReporter_Settings.Xml"
