@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "InfoReporter", "InfoReporter.vbproj", "{8279C426-475B-4590-A86C-30CC4C4AAFA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8279C426-475B-4590-A86C-30CC4C4AAFA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8279C426-475B-4590-A86C-30CC4C4AAFA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8279C426-475B-4590-A86C-30CC4C4AAFA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8279C426-475B-4590-A86C-30CC4C4AAFA5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4F4D15E0-11F7-49E5-A4BB-418519C3C4C2}
+	EndGlobalSection
+EndGlobal
