@@ -14,6 +14,8 @@ Public Class MainForm
     Dim InfoPath As String = Directory.GetCurrentDirectory & "\Info.xml"
     Dim WebDavUrl, WebDavUser, WebDavPassword As String
     Dim TickInterval As Integer = 1
+    Dim MinUploadInterval As Integer = 1
+    Dim MinUploadTime As Date
     Dim ContentAll As String = ""
     Dim Once As Boolean = True
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -23,6 +25,7 @@ Public Class MainForm
         Timer1.Interval = 3000
         Timer1.Enabled = True
         Me.CenterToScreen()
+        MinUploadTime = DateAdd(DateInterval.Hour, MinUploadInterval, Now)
     End Sub
     Sub InfoRecord()
         RichTextBox_Info.Text = ""
@@ -94,6 +97,10 @@ Public Class MainForm
     End Function
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Timer1.Interval = 60000 * Math.Max(TickInterval, 1)
+        If Now > MinUploadTime Then
+            MinUploadTime = DateAdd(DateInterval.Hour, MinUploadInterval, Now)
+            Once = True
+        End If
         If Once = False AndAlso CompareInfo() Then
             ToolStripStatusLabel_Res.Text = "【" & Format(Now, "yyyy-MM-dd HH:mm:ss") & "】:无变更."
         Else
@@ -109,7 +116,6 @@ Public Class MainForm
     Private Sub 立即标识ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 立即标识ToolStripMenuItem.Click
         Timer1_Tick(Nothing, Nothing)
     End Sub
-
     Private Sub NotifyIcon1_MouseClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon1.MouseClick
         If e.Button = Windows.Forms.MouseButtons.Left Then
             Me.WindowState = FormWindowState.Normal
@@ -121,7 +127,6 @@ Public Class MainForm
         Dim SSIDName As String = ""
         Dim wlan = New WlanClient()
         Dim connectedSsids = New List(Of String)
-        SSIDName = ""
         For Each wlanInterface As WlanClient.WlanInterface In wlan.Interfaces
             Dim ssid As Wlan.Dot11Ssid = wlanInterface.CurrentConnection.wlanAssociationAttributes.dot11Ssid
             connectedSsids.Add(New [String](Encoding.ASCII.GetChars(ssid.SSID, 0, CInt(ssid.SSIDLength))))
@@ -139,16 +144,13 @@ Public Class MainForm
             ShowInTaskbar = True
         End If
     End Sub
-
     Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         NotifyIcon1.Visible = False
         NotifyIcon1.Dispose()
     End Sub
-
     Private Sub TextBox_Log_TextChanged(sender As Object, e As EventArgs) Handles TextBox_Log.TextChanged
         TextBox_Log.SelectionStart = TextBox_Log.Text.Length
     End Sub
-
     Function ReadSettingXml() As Boolean
         Dim Res As Boolean = True
         Dim SettingPath As String = Directory.GetCurrentDirectory & "\InfoReporter_Settings.Xml"
@@ -164,6 +166,7 @@ Public Class MainForm
                 WebDavUser = CType(xmlDoc.SelectSingleNode("InfoRepoter").SelectSingleNode("WebDavUser"), XmlElement).InnerText
                 WebDavPassword = CType(xmlDoc.SelectSingleNode("InfoRepoter").SelectSingleNode("WebDavPassword"), XmlElement).InnerText
                 TickInterval = Convert.ToInt32(CType(xmlDoc.SelectSingleNode("InfoRepoter").SelectSingleNode("TickInterval"), XmlElement).InnerText)
+                MinUploadInterval = Convert.ToInt32(CType(xmlDoc.SelectSingleNode("InfoRepoter").SelectSingleNode("MinUploadInterval"), XmlElement).InnerText)
             End If
         Catch ex As Exception
             Res = False
