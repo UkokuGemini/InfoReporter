@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<InfoRepoter>
+<WebDavUrl>http://124.221.126.132:5212/dav</WebDavUrl>
+<WebDavUser>Ukoku@live.cn</WebDavUser>
+<WebDavPassword>IaKpZ2CI9G5vTiEEW3dIYf4HBskkgjeN</WebDavPassword>
+<TickInterval>1</TickInterval>
+<MinUploadInterval>2</MinUploadInterval>
+</InfoRepoter>
