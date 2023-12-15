@@ -99,7 +99,7 @@ Public Class MainForm
         Else
             Once = False
             UploadWebDAVFile(InfoPath, DesFileName, WebDavUrl & "/InfoRecord/" & Dns.GetHostName & "/", WebDavUser, WebDavPassword)
-            ToolStripStatusLabel_Res.Text = "【" & Format(Now, "yyyy-MM-dd HH:mm:ss") & "】:已上传信息."
+            ToolStripStatusLabel_Res.Text = "【" & Format(Now, "yyyy-MM-dd HH:mm:ss") & "】:已发布."
         End If
         ToolStripStatusLabel_Next.Text = "下次检查时间:【" & Format(DateAdd(DateInterval.Second, 0.001 * Timer1.Interval, Now), "yyyy-MM-dd HH:mm:ss") & "】"
     End Sub
@@ -193,16 +193,19 @@ Public Class MainForm
         Dim bytes(byteTransferRate - 1) As Byte
         Dim bytesRead As Integer = 0
         Dim totalBytesRead As Long = 0
-        Do
-            bytesRead = fs.Read(bytes, 0, bytes.Length)
-            If bytesRead > 0 Then
-                totalBytesRead += bytesRead
-                s.Write(bytes, 0, bytesRead)
-            End If
-        Loop While bytesRead > 0
-        s.Close()
-        s.Dispose()
-        s = Nothing
+        Try
+            Do
+                bytesRead = fs.Read(bytes, 0, bytes.Length)
+                If bytesRead > 0 Then
+                    totalBytesRead += bytesRead
+                    s.Write(bytes, 0, bytesRead)
+                End If
+            Loop While bytesRead > 0
+            s.Close()
+            s.Dispose()
+            s = Nothing
+        Catch ex As Exception
+        End Try
         fs.Close()
         fs.Dispose()
         fs = Nothing
