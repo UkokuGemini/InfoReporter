@@ -44,6 +44,7 @@ Public Class MainForm
         AppendAllText(Format(Now, "yyyy-MM-dd HH:mm:ss"), True)
         AppendAllText("</Time>" & vbCrLf & "</InfoRepoter>")
         IO.File.WriteAllText(InfoPath, ContentAll)
+        ContentAll = ""
     End Sub
     Public Sub AppendAllText(ByVal Str As String, Optional Mark As Boolean = False)
         If Mark Then
