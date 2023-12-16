@@ -96,6 +96,7 @@ Public Class MainForm
         End If
     End Function
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        InfoRecord()
         Timer1.Interval = 60000 * Math.Max(TickInterval, 1)
         If Now > MinUploadTime Then
             MinUploadTime = DateAdd(DateInterval.Hour, MinUploadInterval, Now)
