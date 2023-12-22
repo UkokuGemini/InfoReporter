@@ -125,17 +125,21 @@ Public Class MainForm
         ElseIf e.Button = Windows.Forms.MouseButtons.Right Then
         End If
     End Sub
-    Function GetWifi()
+    Function GetWifi() As String
         Dim SSIDName As String = ""
-        Dim wlan = New WlanClient()
-        Dim connectedSsids = New List(Of String)
-        For Each wlanInterface As WlanClient.WlanInterface In wlan.Interfaces
-            Dim ssid As Wlan.Dot11Ssid = wlanInterface.CurrentConnection.wlanAssociationAttributes.dot11Ssid
-            connectedSsids.Add(New [String](Encoding.ASCII.GetChars(ssid.SSID, 0, CInt(ssid.SSIDLength))))
-            For Each item As String In connectedSsids
-                SSIDName += item
+        Try
+            Dim wlan = New WlanClient()
+            Dim connectedSsids = New List(Of String)
+            For Each wlanInterface As WlanClient.WlanInterface In wlan.Interfaces
+                Dim ssid As Wlan.Dot11Ssid = wlanInterface.CurrentConnection.wlanAssociationAttributes.dot11Ssid
+                connectedSsids.Add(New [String](Encoding.ASCII.GetChars(ssid.SSID, 0, CInt(ssid.SSIDLength))))
+                For Each item As String In connectedSsids
+                    SSIDName += item
+                Next
             Next
-        Next
+        Catch ex As Exception
+
+        End Try
         Return SSIDName
     End Function
     Private Sub MainForm_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
